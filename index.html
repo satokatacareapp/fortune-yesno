@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>YES / NO 占い</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
+      background: linear-gradient(180deg, #f3e7e9, #e3eeff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 24px;
+      max-width: 420px;
+      width: 90%;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+
+    .question {
+      font-size: 18px;
+      margin-bottom: 24px;
+    }
+
+    button {
+      width: 120px;
+      padding: 12px;
+      margin: 8px;
+      border: none;
+      border-radius: 24px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #6b8cff;
+      color: #fff;
+    }
+
+    button.no {
+      background: #cccccc;
+      color: #333;
+    }
+
+    button:hover {
+      opacity: 0.85;
+    }
+
+    .result {
+      font-size: 16px;
+      line-height: 1.8;
+      text-align: left;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h1>やさしいYES / NO占い</h1>
+    <div id="content"></div>
+  </div>
+
+  <script>
+    const questions = [
+      "最近、心が少し疲れていると感じますか？",
+      "今の悩みを誰かに話したいと思っていますか？",
+      "変わりたい気持ちが、少しでもありますか？",
+      "直感を信じたいと思うことが増えていますか？",
+      "今は無理せず、自分を大切にしたい時期だと思いますか？"
+    ];
+
+    const results = [
+      "今は大きく動く必要はありません。<br>心はとても静かな状態です。<br><br>無理に答えを出そうとせず、日常の中の小さな安心を大切にしてください。",
+      "あなたの心は、少しだけ揺れています。<br><br>今感じている違和感は、これから良い方向へ向かうためのサイン。焦らなくて大丈夫です。",
+      "変化の入り口に立っています。<br><br>迷いながらでも一歩踏み出すことで、あなたにとって必要な流れが自然と整っていくでしょう。",
+      "心はすでに前を向いています。<br><br>優しさと直感を信じて行動することで、状況はゆっくりと好転していきます。",
+      "今はとても良い流れの中にいます。<br><br>あなたの選択は間違っていません。安心して、自分の感覚を信じてください。"
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    const content = document.getElementById("content");
+
+    function showQuestion() {
+      content.innerHTML = `
+        <div class="question">${questions[current]}</div>
+        <button onclick="answer(true)">YES</button>
+        <button class="no" onclick="answer(false)">NO</button>
+      `;
+    }
+
+    function answer(isYes) {
+      if (isYes) score++;
+      current++;
+
+      if (current < questions.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      content.innerHTML = `
+        <div class="result">
+          ${results[Math.min(score, results.length - 1)]}
+        </div>
+      `;
+    }
+
+    showQuestion();
+  </script>
+</body>
+</html>
