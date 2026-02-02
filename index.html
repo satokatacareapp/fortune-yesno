@@ -3,187 +3,195 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>星屑の恋愛占い</title>
+  <title>やさしい恋愛占い - Premium</title>
   <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --gold: linear-gradient(135deg, #f5e18b 0%, #d4af37 50%, #b8860b 100%);
-      --bg-dark: radial-gradient(circle at center, #0a192f 0%, #02060c 100%);
+      /* 元のイメージを活かした深い緑のグラデーション */
+      --bg-green: radial-gradient(circle at top, #0f6b5f, #063b35);
+      --gold-gradient: linear-gradient(135deg, #f5e18b 0%, #d4af37 50%, #b8860b 100%);
+      --accent-gold: #d4af37;
     }
 
     body {
       margin: 0;
       min-height: 100vh;
       font-family: 'Shippori Mincho', serif;
-      background: var(--bg-dark);
-      color: #333;
+      background: var(--bg-green);
+      color: #fff;
       display: flex;
       justify-content: center;
       align-items: center;
       overflow: hidden;
+      position: relative;
     }
 
-    /* 背景の星屑演出 */
-    .stars {
+    /* 星屑が舞う背景演出 */
+    #particle-container {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
-      z-index: -1;
-      background: transparent;
-    }
-    .star {
-      position: absolute;
-      background: #fff;
-      border-radius: 50%;
-      opacity: 0;
-      animation: twinkle var(--duration) infinite ease-in-out;
-    }
-    @keyframes twinkle {
-      0%, 100% { opacity: 0; transform: scale(0.5); }
-      50% { opacity: 0.8; transform: scale(1.2); }
+      z-index: 0;
+      pointer-events: none;
     }
 
     .container {
       width: 90%;
-      max-width: 500px;
+      max-width: 550px;
+      z-index: 1;
       position: relative;
     }
 
-    /* 豪華な外枠フレーム */
+    /* 豪華なダブルゴールドフレーム */
     .outer-frame {
-      padding: 10px;
-      background: var(--gold);
-      border-radius: 25px;
-      box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+      padding: 12px;
+      background: var(--gold-gradient);
+      border-radius: 30px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 20px rgba(212, 175, 55, 0.3);
     }
 
-    .main-card {
-      background: rgba(255, 255, 255, 0.95);
-      border-radius: 18px;
-      padding: 40px 25px;
+    .inner-content {
+      background: rgba(255, 255, 255, 0.08); /* 透過させて背景の緑を微かに見せる */
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 22px;
+      padding: 40px 30px;
       text-align: center;
-      min-height: 400px;
+      min-height: 420px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
     }
 
-    h1 {
-      font-size: 24px;
-      color: #d4af37;
-      margin-bottom: 30px;
-      letter-spacing: 2px;
+    .logo-area img {
+      max-width: 200px;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2));
     }
 
     /* プログレスバー */
-    .progress-container {
-      height: 6px;
-      background: #eee;
+    .progress-wrapper {
+      background: rgba(255, 255, 255, 0.1);
+      height: 4px;
       border-radius: 10px;
-      margin-bottom: 40px;
+      margin: 20px 0 40px;
       overflow: hidden;
     }
     .progress-bar {
       height: 100%;
       width: 0%;
-      background: var(--gold);
-      transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      background: var(--gold-gradient);
+      box-shadow: 0 0 10px var(--accent-gold);
+      transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    /* 質問テキストのフェードアニメーション */
+    /* 質問テキスト */
     #question {
-      font-size: 1.2rem;
+      font-size: 1.25rem;
       line-height: 1.8;
-      margin-bottom: 40px;
-      min-height: 3.6em;
-      transition: opacity 0.4s;
+      margin-bottom: 50px;
+      min-height: 4em;
+      color: #fff;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      transition: opacity 0.5s, transform 0.5s;
     }
 
-    .buttons {
+    /* ボタンデザイン */
+    .btn-group {
       display: flex;
       justify-content: center;
-      gap: 25px;
+      gap: 30px;
+      margin-top: auto;
     }
 
-    .btn {
-      width: 130px;
-      padding: 15px 0;
+    .gold-btn {
+      width: 140px;
+      padding: 16px 0;
       font-size: 18px;
       font-weight: bold;
       border: none;
       border-radius: 50px;
-      background: var(--gold);
-      color: #fff;
+      background: var(--gold-gradient);
+      color: #063b35; /* 文字は深い緑で高級感を */
       cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
       font-family: inherit;
     }
 
-    .btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(212, 175, 55, 0.6);
+    .gold-btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+      filter: brightness(1.1);
     }
 
-    .btn:active {
-      transform: translateY(1px);
-    }
-
-    /* 結果表示 */
-    .result {
+    /* 結果画面 */
+    .result-display {
       display: none;
-      font-size: 1.1rem;
-      line-height: 2;
-      animation: fadeIn 1s ease forwards;
+      font-size: 1.15rem;
+      line-height: 2.2;
+      animation: resultFade 1.2s ease forwards;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes resultFade {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
     }
   </style>
 </head>
 <body>
 
-  <div class="stars" id="starsContainer"></div>
+  <div id="particle-container"></div>
 
   <div class="container">
     <div class="outer-frame">
-      <div class="main-card">
-        <h1>星屑の恋愛占い</h1>
+      <div class="inner-content">
+        
+        <div class="logo-area">
+          <img src="images/logo.png" alt="やさしい恋愛占い">
+        </div>
 
-        <div id="quiz-area">
-          <div class="progress-container">
+        <div id="quiz-ui">
+          <div class="progress-wrapper">
             <div class="progress-bar" id="progressBar"></div>
           </div>
           
           <h2 id="question"></h2>
 
-          <div class="buttons" id="buttons">
-            <button class="btn" onclick="handleAnswer(true)">YES</button>
-            <button class="btn" onclick="handleAnswer(false)">NO</button>
+          <div class="btn-group">
+            <button class="gold-btn" onclick="next(true)">YES</button>
+            <button class="gold-btn" onclick="next(false)">NO</button>
           </div>
         </div>
 
-        <div class="result" id="result"></div>
+        <div class="result-display" id="resultDisplay"></div>
+
       </div>
     </div>
   </div>
 
   <script>
-    // 星屑を生成する
-    const starsContainer = document.getElementById('starsContainer');
-    for (let i = 0; i < 100; i++) {
-      const star = document.createElement('div');
-      star.className = 'star';
+    // 背景のキラキラ演出
+    const pContainer = document.getElementById('particle-container');
+    for (let i = 0; i < 60; i++) {
+      const p = document.createElement('div');
+      p.style.position = 'absolute';
+      p.style.background = 'rgba(212, 175, 55, 0.4)';
+      p.style.borderRadius = '50%';
       const size = Math.random() * 3 + 'px';
-      star.style.width = size;
-      star.style.height = size;
-      star.style.left = Math.random() * 100 + '%';
-      star.style.top = Math.random() * 100 + '%';
-      star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
-      star.style.animationDelay = Math.random() * 5 + 's';
-      starsContainer.appendChild(star);
+      p.style.width = size; p.style.height = size;
+      p.style.left = Math.random() * 100 + '%';
+      p.style.top = Math.random() * 100 + '%';
+      // ゆっくり漂うアニメーション
+      p.animate([
+        { transform: 'translateY(0) translateX(0)', opacity: 0 },
+        { transform: `translateY(-${Math.random() * 100}px) translateX(${Math.random() * 20}px)`, opacity: 0.8 },
+        { transform: 'translateY(-200px) translateX(0)', opacity: 0 }
+      ], {
+        duration: Math.random() * 4000 + 4000,
+        iterations: Infinity,
+        delay: Math.random() * 5000
+      });
+      pContainer.appendChild(p);
     }
 
     const questions = [
@@ -199,57 +207,53 @@
       "今も心のどこかで繋がっていると思いますか？"
     ];
 
-    let current = 0;
-    let yesCount = 0;
+    let currentIdx = 0;
+    let yesScore = 0;
 
-    const questionEl = document.getElementById("question");
-    const progressBar = document.getElementById("progressBar");
-    const quizArea = document.getElementById("quiz-area");
-    const resultEl = document.getElementById("result");
+    const qEl = document.getElementById("question");
+    const bar = document.getElementById("progressBar");
+    const quizUI = document.getElementById("quiz-ui");
+    const resEl = document.getElementById("resultDisplay");
 
-    function updateView() {
-      questionEl.style.opacity = 0;
+    function render() {
+      qEl.style.opacity = 0;
+      qEl.style.transform = "translateY(10px)";
+      
       setTimeout(() => {
-        questionEl.textContent = questions[current];
-        questionEl.style.opacity = 1;
-        progressBar.style.width = ((current / questions.length) * 100) + "%";
+        qEl.textContent = questions[currentIdx];
+        qEl.style.opacity = 1;
+        qEl.style.transform = "translateY(0)";
+        bar.style.width = ((currentIdx / questions.length) * 100) + "%";
       }, 400);
     }
 
-    function handleAnswer(isYes) {
-      if (isYes) yesCount++;
-      current++;
+    function next(val) {
+      if (val) yesScore++;
+      currentIdx++;
 
-      if (current < questions.length) {
-        updateView();
+      if (currentIdx < questions.length) {
+        render();
       } else {
-        showResult();
+        finish();
       }
     }
 
-    function showResult() {
-      progressBar.style.width = "100%";
-      quizArea.style.display = "none";
+    function finish() {
+      bar.style.width = "100%";
+      quizUI.style.display = "none";
       
-      let text = "";
-      if (yesCount >= 8) {
-        text = "【深く強い絆】<br>あなたとあの人のご縁は、とても深く強いものです。迷いながらも、心はすでに同じ方向を向いています。";
-      } else if (yesCount >= 6) {
-        text = "【育まれる愛】<br>この恋は、ゆっくりと育っていくご縁。焦らず、信じることで道は開かれていくでしょう。";
-      } else if (yesCount >= 4) {
-        text = "【静かな待機】<br>想いは確かにあります。ただ今は、タイミングを待つことが大切な時期かもしれません。";
-      } else if (yesCount >= 2) {
-        text = "【自己愛の時】<br>不安が先立ちやすい状態です。まずはあなた自身の心を満たすことから始めましょう。";
-      } else {
-        text = "【新しい風】<br>今は手放すことで、新しい流れが入ってくる暗示。ご縁は形を変えて続いていきます。";
-      }
+      let msg = "";
+      if (yesScore >= 8) msg = "【宿命の絆】<br>あなたとあの人のご縁は、天に守られています。迷わずその直感を信じて進んでください。";
+      else if (yesScore >= 6) msg = "【芽生えの時】<br>焦る必要はありません。今は種をまく時期。やがて美しい花が咲くことを信じましょう。";
+      else if (yesScore >= 4) msg = "【凪のひととき】<br>今は少し自分を休ませる時かもしれません。静かに運命が動くのを待ちましょう。";
+      else if (yesScore >= 2) msg = "【内なる対話】<br>相手ではなく、まずは自分の心に「どうしたい？」と問いかけてみることが鍵です。";
+      else msg = "【新しい門出】<br>一つの終わりは、新しい奇跡の始まり。手放すことで、より輝くご縁が舞い込みます。";
 
-      resultEl.innerHTML = text;
-      resultEl.style.display = "block";
+      resEl.innerHTML = msg;
+      resEl.style.display = "block";
     }
 
-    // 初期化
-    updateView();
+    render();
   </script>
 </body>
 </html>
