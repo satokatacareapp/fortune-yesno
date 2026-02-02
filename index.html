@@ -1,101 +1,63 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <title>やさしいYES / NO占い｜urano</title>
+  <meta charset="UTF-8" />
+  <title>ウラーノ/恋愛傾向診断</title>
 
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      background: radial-gradient(circle at top, #1fa89b, #0b5f55 70%);
-      font-family: "Hiragino Mincho ProN", "Noto Serif JP", serif;
-      color: #fff;
+      font-family: sans-serif;
+      background: #f6f6f6;
+      text-align: center;
+      padding: 30px;
     }
 
     .container {
-      max-width: 620px;
-      margin: 40px auto;
-      padding: 40px 30px;
-      background: #0f7f73;
-      border-radius: 24px;
-      border: 3px solid #d4af37;
-      box-shadow: 0 0 30px rgba(212,175,55,0.4);
+      max-width: 500px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
-    .logo {
-      width: 260px;
-      display: block;
-      margin: 0 auto 25px;
+    img.logo {
+      width: 150px;
+      margin-bottom: 20px;
     }
 
-    h1 {
-      text-align: center;
-      color: #f5e6b3;
-      letter-spacing: 0.12em;
-      margin-bottom: 30px;
+    .progress {
+      width: 100%;
+      background: #eee;
+      height: 10px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      overflow: hidden;
     }
 
-    #question {
-      font-size: 18px;
-      line-height: 1.8;
-      text-align: center;
-      margin-bottom: 25px;
-    }
-
-    .buttons {
-      display: flex;
-      justify-content: space-between;
-      margin: 25px 0;
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: #4caf50;
+      transition: width 0.3s;
     }
 
     button {
-      width: 48%;
-      padding: 14px;
-      border-radius: 30px;
+      width: 45%;
+      padding: 15px;
       font-size: 16px;
+      margin: 10px 5px;
       border: none;
+      border-radius: 8px;
       cursor: pointer;
     }
 
-    button.yes {
-      background: linear-gradient(#f3d98c, #d4af37);
-      color: #3b2a00;
-    }
-
-    button.no {
-      background: #1e8f7d;
-      color: #fff;
-      border: 1px solid #d4af37;
-    }
-
-    #progress-container {
-      background: rgba(255,255,255,0.25);
-      height: 10px;
-      border-radius: 10px;
-      overflow: hidden;
-      margin-bottom: 30px;
-    }
-
-    #progress-bar {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(to right, #f5e6b3, #d4af37);
-    }
+    .yes { background: #4caf50; color: #fff; }
+    .no  { background: #f44336; color: #fff; }
 
     #result {
-      margin-top: 30px;
-      font-size: 17px;
-      line-height: 1.9;
-      text-align: center;
-      color: #fff;
-    }
-
-    .footer {
-      margin-top: 30px;
-      font-size: 14px;
-      text-align: center;
-      opacity: 0.85;
+      font-size: 18px;
+      margin-top: 20px;
     }
   </style>
 </head>
@@ -103,83 +65,76 @@
 <body>
   <div class="container">
 
-    <!-- ロゴ（画像は images/urano-logo.png をアップロードしてね） -->
-    <img src="images/urano-logo.png" alt="urano 恋愛相談ウラーノ" class="logo">
+    <!-- ロゴ画像 -->
+    <img src="images/logo.png" class="logo" alt="logo">
 
-    <h1>やさしいYES / NO占い</h1>
-
-    <p id="question"></p>
-
-    <div id="progress-container">
-      <div id="progress-bar"></div>
+    <!-- 進捗バー -->
+    <div class="progress">
+      <div class="progress-bar" id="progressBar"></div>
     </div>
 
-    <div class="buttons">
-      <button class="yes" onclick="answer(true)">YES</button>
-      <button class="no" onclick="answer(false)">NO</button>
-    </div>
+    <!-- 質問 -->
+    <h2 id="question"></h2>
 
+    <!-- ボタン -->
+    <button class="yes" onclick="answer(true)">YES</button>
+    <button class="no" onclick="answer(false)">NO</button>
+
+    <!-- 結果 -->
     <div id="result"></div>
-
-    <div class="footer">
-      心を静かにして、直感でお選びください。
-    </div>
-
   </div>
 
   <script>
     const questions = [
-      "今、あなたの心は少し疲れていると感じますか？",
-      "誰かに本音を打ち明けたい気持ちはありますか？",
-      "過去の出来事が、まだ心に残っていますか？",
-      "未来に対して、不安よりも希望を感じたいですか？",
-      "大切な人との関係を、もう一度見つめ直したいですか？",
-      "最近、自分を後回しにしていると感じますか？",
-      "変わりたいという気持ちは、心の中にありますか？",
-      "今の選択が、正しいのか迷っていますか？",
-      "誰かの言葉に、救われたいと思っていますか？",
-      "この占いの結果を、静かに受け取る準備はできていますか？"
+      "今の選択に迷いはありますか？",
+      "直感を信じたいと思っていますか？",
+      "変化を恐れていませんか？",
+      "誰かの意見に影響されていますか？",
+      "本当は答えを知っている気がしますか？",
+      "心が少し疲れていますか？",
+      "今は待つより動く時期だと思いますか？",
+      "この選択で後悔しない自信はありますか？",
+      "未来は明るいと感じますか？",
+      "最後は自分で決めたいですか？"
     ];
 
-    let current = 0;
+    let index = 0;
     let yesCount = 0;
 
     const questionEl = document.getElementById("question");
-    const progressBar = document.getElementById("progress-bar");
     const resultEl = document.getElementById("result");
+    const progressBar = document.getElementById("progressBar");
 
     function showQuestion() {
-      questionEl.innerText = questions[current];
-      progressBar.style.width = ((current / questions.length) * 100) + "%";
+      questionEl.textContent = questions[index];
+      progressBar.style.width = ((index) / questions.length) * 100 + "%";
     }
 
     function answer(isYes) {
       if (isYes) yesCount++;
-      current++;
+      index++;
 
-      if (current < questions.length) {
+      if (index < questions.length) {
         showQuestion();
       } else {
+        progressBar.style.width = "100%";
         showResult();
       }
     }
 
     function showResult() {
-      progressBar.style.width = "100%";
-      questionEl.style.display = "none";
-      document.querySelector(".buttons").style.display = "none";
-
       let message = "";
 
-      if (yesCount >= 8) {
-        message = "あなたの心は今、前向きな流れの中にあります。<br>直感を信じて進んで大丈夫です。";
-      } else if (yesCount >= 5) {
-        message = "迷いはありますが、答えはすでに心の中にあります。<br>焦らず、自分のペースで進みましょう。";
+      if (yesCount >= 7) {
+        message = "🌟 YESが多め。前向きに進んで大丈夫！";
+      } else if (yesCount >= 4) {
+        message = "🌙 少し迷いがあるみたい。焦らなくてOK。";
       } else {
-        message = "今は無理に答えを出さなくて大丈夫。<br>心を休めることも、大切な選択です。";
+        message = "🛑 今は立ち止まるタイミングかも。";
       }
 
-      resultEl.innerHTML = message;
+      questionEl.textContent = "診断結果";
+      resultEl.textContent = message;
     }
 
     showQuestion();
