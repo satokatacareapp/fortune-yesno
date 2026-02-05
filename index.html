@@ -65,6 +65,28 @@
     .btn-yes { background: var(--gold-gradient); color: #fff; border: none; box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3); }
     .btn-no { background: #fff; color: #999; border: 1px solid #ddd; }
 
+/* 追加：オススメの先生ラベルのデザイン */
+.recommend-label {
+  font-size: 0.95rem;
+  color: #b8860b; /* タイトル等と合わせたゴールド系 */
+  font-weight: 700;
+  text-align: center;
+  margin: 35px 0 15px; /* 上に広めの余白、下に少しの余白 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+/* ラベルの両サイドに細いラインを入れる装飾（お好みで） */
+.recommend-label::before,
+.recommend-label::after {
+  content: "";
+  height: 1px;
+  flex-grow: 1;
+  background: rgba(212, 175, 55, 0.3);
+}
+    
     /* --- 結果表示 --- */
     .result-theme { font-size: 1.2rem; color: #b8860b; font-weight: 700; border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 20px; display: block; }
     .result-desc { font-size: 0.9rem; line-height: 1.8; color: #555; text-align: left; white-space: pre-wrap; margin-bottom: 30px; }
@@ -113,20 +135,25 @@
           </div>
         </div>
 
-        <div id="result-display" class="fade-in">
-          <span class="result-theme" id="resultTheme"></span>
-          <p class="result-desc" id="resultDesc"></p>
-          <div class="expert-section">
-            <div class="expert-card">
-              <div class="expert-photo"><img src="images/華月さん (3).jpg" alt="華月先生"></div>
-              <div class="expert-info">
-                <h3 class="expert-name">華月 先生</h3>
-                <p class="expert-caption">深層心理を読み解き、二人の未来を繋ぎます</p>
-              </div>
-            </div>
-            <a href="#" class="consult-btn">華月先生に今すぐ相談する</a>
-          </div>
-        </div>
+     <div id="result-display" class="fade-in">
+  <span class="result-theme" id="resultTheme"></span>
+  <p class="result-desc" id="resultDesc"></p>
+  
+  <div class="recommend-label">あなたにオススメの先生</div>
+
+  <div class="expert-section">
+    <div class="expert-card">
+      <div class="expert-photo">
+        <img src="images/華月さん (3).jpg" alt="華月先生">
+      </div>
+      <div class="expert-info">
+        <h3 class="expert-name">華月 先生</h3>
+        <p class="expert-caption">深層心理を読み解き、二人の未来を繋ぎます</p>
+      </div>
+    </div>
+    <a href="#" class="consult-btn">華月先生に今すぐ相談する</a>
+  </div>
+</div>
 
       </div>
     </div>
