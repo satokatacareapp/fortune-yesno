@@ -4,6 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>恋愛相談-ウラーノ-</title>
+  
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KCHQ8DY8MD"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-KCHQ8DY8MD');
+  </script>
+
   <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
@@ -34,7 +43,7 @@
       min-height: 400px; display: flex; flex-direction: column; justify-content: center;
     }
 
-    /* イントロ・共通ヘッダー */
+    /* イントロ・ヘッダー */
     .logo-img { max-width: 140px; margin-bottom: 15px; }
     .main-title { font-size: 22px; margin: 0; background: var(--gold-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 700; letter-spacing: 0.1em; }
     .sub-title { font-size: 11px; margin-top: 8px; color: #888; letter-spacing: 0.2em; font-weight: bold; }
@@ -58,7 +67,7 @@
     .btn-yes { background: var(--gold-gradient); color: #fff; border: none; }
     .btn-no { background: #fff; color: #999; border: 1px solid #ddd; }
 
-    /* 結果表示ページ独自デザイン */
+    /* 結果表示 */
     .result-theme { font-size: 1.25rem; color: #b8860b; font-weight: 700; border-bottom: 1px solid #eee; padding-bottom: 15px; margin-bottom: 20px; display: block; }
     .result-desc { font-size: 0.9rem; line-height: 1.8; color: #555; text-align: left; white-space: pre-wrap; margin-bottom: 30px; }
     
@@ -114,9 +123,7 @@
         <div id="result-display" class="fade-in">
           <span class="result-theme" id="resultTheme"></span>
           <p class="result-desc" id="resultDesc"></p>
-          
           <div class="recommend-label">あなたにオススメの先生</div>
-
           <div id="expert-container">
             <div class="expert-card">
               <div class="expert-photo"><img src="" id="expertImg" alt="鑑定師"></div>
@@ -134,7 +141,6 @@
   </div>
 
   <script>
-    // 背景演出
     const pContainer = document.getElementById('particle-container');
     for (let i = 0; i < 40; i++) {
       const p = document.createElement('div');
@@ -159,62 +165,36 @@
       "今も心のどこかで繋がっていると思いますか？"
     ];
 
-    // 結果文章と先生データの紐付け
     const resultPatterns = [
       {
-        scoreRange: [9, 10], // YESが9〜10個
+        scoreRange: [9, 10],
         theme: "① 天に守られたご縁",
         desc: "あなたとあの人を結ぶご縁は、偶然ではなく、見えない大きな流れの中で丁寧に紡がれてきたものです。\nたとえ今、距離を感じても、その絆が失われることはありません。",
-        expert: {
-          name: "宝海 先生",
-          caption: "『いつも隣にはあの人がいる🩷』\nそんな“愛されるあなた”へと導きます",
-          img: "images/宝海さん.png",
-          url: "urano://counselor?code=4829427"
-        }
+        expert: { name: "宝海 先生", caption: "『いつも隣にはあの人がいる🩷』\nそんな“愛されるあなた”へと導きます", img: "images/宝海さん.png", url: "urano://counselor?code=4829427" }
       },
       {
-        scoreRange: [7, 8], // YESが7〜8個
+        scoreRange: [7, 8],
         theme: "② 育まれる愛の季節",
         desc: "今は答えを急ぐ時ではなく、目の前にある関係性を大切に育む時期です。\n小さなやり取りが、やがて大きな信頼へとつながっていくでしょう。",
-        expert: {
-          name: "瞳子 先生",
-          caption: "꧁ 🦋神々の住む島✨バリ島✨にて 🦋꧂\n꧁✨調整したエネルギーをお届けします✨꧂",
-          img: "images/瞳子先生.png",
-          url: "urano://counselor?code=8157232"
-        }
+        expert: { name: "瞳子 先生", caption: "꧁ 🦋神々の住む島✨バリ島✨にて 🦋꧂\n꧁✨調整したエネルギーをお届けします✨꧂", img: "images/瞳子先生.png", url: "urano://counselor?code=8157232" }
       },
       {
-        scoreRange: [5, 6], // YESが5〜6個
+        scoreRange: [5, 6],
         theme: "④ 過去から続く魂の約束",
         desc: "あなたとあの人の関係は、今世だけの出会いではなく、過去から続く深い意味を持ったご縁です。\n今この迷いは、より深い理解へ進むための大切な通過点なのです。",
-        expert: {
-          name: "愛羽 先生",
-          caption: "「今なにが起きているか」「どう動けば流れが変わるか」を現実的・具体的にお伝えします🌸",
-          img: "images/愛羽先生.png",
-          url: "urano://counselor?code=28434629"
-        }
+        expert: { name: "愛羽 先生", caption: "「今なにが起きているか」「どう動けば流れが変わるか」を現実的・具体的にお伝えします🌸", img: "images/愛羽先生.png", url: "urano://counselor?code=28434629" }
       },
       {
-        scoreRange: [3, 4], // YESが3〜4個
+        scoreRange: [3, 4],
         theme: "⑥ 穏やかな愛への兆し",
         desc: "このご縁は、激しさを超えて、より穏やかで安心できる愛へと変化していく兆しがあります。\n時間をかけて信頼を育てることで、心から安らげる関係へ近づくでしょう。",
-        expert: {
-          name: "由樹 先生",
-          caption: "とことん最後まで叶うその日まで、二人三脚で幸せを掴みに行く気持ちで鑑定をしています☺️",
-          img: "images/由樹先生.png",
-          url: "urano://counselor?code=7681119"
-        }
+        expert: { name: "由樹 先生", caption: "とことん最後まで叶うその日まで、二人三脚で幸せを掴みに行く気持ちで鑑定をしています☺️", img: "images/由樹先生.png", url: "urano://counselor?code=7681119" }
       },
       {
-        scoreRange: [0, 2], // YESが0〜2個
+        scoreRange: [0, 2],
         theme: "③ 自分を愛し、運命を拓く",
         desc: "最も大切なのは、あなた自身を深く労わることです。\n自分を愛する選択を重ねるほど、運命の流れは自然と好転し、必要なご縁を引き寄せます。",
-        expert: {
-          name: "リュウタロー 先生",
-          caption: "私は人の心の奥にある小さな迷い、まだ言葉にできない想いを感じ取る力があります。",
-          img: "images/リュウタロー先生.png",
-          url: "urano://counselor?code=3688274"
-        }
+        expert: { name: "リュウタロー 先生", caption: "私は人の心の奥にある小さな迷い、まだ言葉にできない想いを感じ取る力があります。", img: "images/リュウタロー先生.png", url: "urano://counselor?code=3688274" }
       }
     ];
 
@@ -222,6 +202,8 @@
     let yesScore = 0;
 
     function startQuiz() {
+      // 診断開始イベントを計測
+      gtag('event', 'quiz_start');
       document.getElementById("intro-ui").style.display = "none";
       document.getElementById("quiz-ui").style.display = "block";
       render();
@@ -242,20 +224,23 @@
 
     function finish() {
       document.getElementById("quiz-ui").style.display = "none";
-      
-      // スコアに該当するパターンを検索
       const pattern = resultPatterns.find(p => yesScore >= p.scoreRange[0] && yesScore <= p.scoreRange[1]);
 
-      // 画面に反映
       document.getElementById("resultTheme").textContent = pattern.theme;
       document.getElementById("resultDesc").textContent = pattern.desc;
-      
-      // 先生情報の反映
       document.getElementById("expertImg").src = pattern.expert.img;
       document.getElementById("expertName").textContent = pattern.expert.name;
       document.getElementById("expertCaption").innerText = pattern.expert.caption;
       document.getElementById("expertLink").href = pattern.expert.url;
       document.getElementById("expertLink").textContent = `${pattern.expert.name}に今すぐ相談する`;
+
+      // 鑑定ボタンクリック時の計測
+      document.getElementById("expertLink").onclick = function() {
+        gtag('event', 'select_expert', {
+          'expert_name': pattern.expert.name,
+          'method': 'consult_button'
+        });
+      };
 
       document.getElementById("result-display").style.display = "block";
     }
